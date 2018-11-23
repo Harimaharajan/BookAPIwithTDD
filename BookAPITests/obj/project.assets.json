@@ -1673,6 +1673,19 @@
         "build": {
           "build/netcoreapp1.0/xunit.runner.visualstudio.props": {}
         }
+      },
+      "BookAPI/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.1.0"
+        },
+        "compile": {
+          "bin/placeholder/BookAPI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookAPI.dll": {}
+        }
       }
     }
   },
@@ -5837,10 +5850,16 @@
         "xunit.runner.visualstudio.2.4.0.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "BookAPI/1.0.0": {
+      "type": "project",
+      "path": "../BookAPI/BookAPI.csproj",
+      "msbuildProject": "../BookAPI/BookAPI.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "BookAPI >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 15.9.0",
       "Microsoft.NETCore.App >= 2.1.0",
       "xunit >= 2.4.0",
@@ -5876,7 +5895,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\BookAPI\\BookAPI\\BookAPI.csproj": {
+              "projectPath": "D:\\BookAPI\\BookAPI\\BookAPI.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

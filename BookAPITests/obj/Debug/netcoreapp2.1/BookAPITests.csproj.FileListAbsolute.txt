@@ -1,0 +1,17 @@
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\BookAPITests.deps.json
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\BookAPITests.runtimeconfig.json
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\BookAPITests.runtimeconfig.dev.json
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\BookAPITests.dll
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\BookAPITests.pdb
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\BookAPI.dll
+D:\BookAPI\BookAPITests\bin\Debug\netcoreapp2.1\BookAPI.pdb
+D:\BookAPI\BookAPITests\obj\Debug\netcoreapp2.1\BookAPITests.csprojAssemblyReference.cache
+D:\BookAPI\BookAPITests\obj\Debug\netcoreapp2.1\BookAPITests.csproj.CoreCompileInputs.cache
+D:\BookAPI\BookAPITests\obj\Debug\netcoreapp2.1\BookAPITests.AssemblyInfoInputs.cache
+D:\BookAPI\BookAPITests\obj\Debug\netcoreapp2.1\BookAPITests.AssemblyInfo.cs
+D:\BookAPI\BookAPITests\obj\Debug\netcoreapp2.1\BookAPITests.csproj.CopyComplete
+D:\BookAPI\BookAPITests\obj\Debug\netcoreapp2.1\BookAPITests.dll
+D:\BookAPI\BookAPITests\obj\Debug\netcoreapp2.1\BookAPITests.pdb

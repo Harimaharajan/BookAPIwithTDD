@@ -1,0 +1,11 @@
+D:\BookAPI\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.deps.json
+D:\BookAPI\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.runtimeconfig.json
+D:\BookAPI\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.runtimeconfig.dev.json
+D:\BookAPI\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.dll
+D:\BookAPI\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.pdb
+D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.csprojAssemblyReference.cache
+D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.csproj.CoreCompileInputs.cache
+D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.AssemblyInfoInputs.cache
+D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.AssemblyInfo.cs
+D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.dll
+D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.pdb
