@@ -2,6 +2,8 @@ using System;
 using Xunit;
 using BookAPI;
 using AutoFixture;
+using Xunit.Sdk;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookAPITests
 {
@@ -10,19 +12,19 @@ namespace BookAPITests
         [Fact]
         public void ValidateNewBook_BookNameEmptyTest_ReturnsValidationString()
         {
-            string bookName = string.Empty;
-            string expectedResult = "Book Name cannot be Empty";
+            var expectedException = new ValidationException(Constants.InvalidBookName);
+            var actualException = Assert.Throws<ValidationException>(() => Program.ValidateBookName(string.Empty));
 
-            Assert.Equal(expectedResult, Program.ValidateBookName(bookName));
+            Assert.Equal(expectedException.Message, actualException.Message);
         }
 
         [Fact]
         public void ValidateNewBook_BookOwnerNameEmptyTest_ReturnsValidationString()
         {
-            string bookOwnerName = string.Empty;
-            string expectedResult = "Book Owner Name cannot be Empty";
+            var expectedException = new ValidationException(Constants.InvalidBookOwnerName);
+            var actualException = Assert.Throws<ValidationException>(() => Program.ValidateBookOwnerName(string.Empty));
 
-            Assert.Equal(expectedResult, Program.ValidateBookOwnerName(bookOwnerName));
+            Assert.Equal(expectedException.Message, actualException.Message);
         }
 
         [Fact]
@@ -31,7 +33,7 @@ namespace BookAPITests
             var fixture = new Fixture();
             BookModel bookModel = fixture.Create<BookModel>();
 
-            Assert.Equal("Book Already Exists", Program.ValidateNewBookModel(bookModel));
+            Assert.True(Program.ValidateIfBookAlreadyExists(bookModel));
         }
 
         [Fact]
@@ -40,16 +42,17 @@ namespace BookAPITests
             var fixture = new Fixture();
             BookModel bookModel = fixture.Create<BookModel>();
 
-            Assert.Equal("Book Addition Successful", Program.AddNewBook(bookModel));
+            Assert.True(Program.AddNewBook(bookModel));
         }
 
         [Fact]
         public void ValidateNewBook_BookModelTest_ReturnsValidationString()
         {
             BookModel bookModel = null;
-            string expectedResult = "Book Details cannot be Empty";
+            var expectedException = new ValidationException(Constants.InvalidBookDetails);
+            var actualException = Assert.Throws<ValidationException>(() => Program.ValidateNewBookModel(bookModel));
 
-            Assert.Equal(expectedResult, Program.ValidateNewBookModel(bookModel));
+            Assert.Equal(expectedException.Message,actualException.Message);
         }
 
         [Fact]
@@ -57,9 +60,10 @@ namespace BookAPITests
         {
             Program p = new Program();
             var fixture = new Fixture();
-            BookModel bookModel = fixture.Create<BookModel>();
+            bool expectedResult = true;
+            BookModel bookModel = fixture.Build<BookModel>().With(x => x.AvailabilityStatus, true).Create();
 
-            Assert.True(p.IsBookAvailable(bookModel));
+            Assert.Equal(expectedResult, p.IsBookAvailable(bookModel));
         }
 
         [Fact]
@@ -67,9 +71,10 @@ namespace BookAPITests
         {
             Program p = new Program();
             var fixture = new Fixture();
-            BookModel bookModel = fixture.Create<BookModel>();
+            bool expectedResult = false;
+            BookModel bookModel = fixture.Build<BookModel>().With(x => x.AvailabilityStatus, false).Create();
 
-            Assert.False(p.IsBookAvailable(bookModel));
+            Assert.Equal(expectedResult,p.IsBookAvailable(bookModel));
         }
     }
 }

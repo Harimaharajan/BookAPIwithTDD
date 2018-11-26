@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookAPI
 {
     public class Program
     {
+        static BookRepository bookRepository = new BookRepository();
         public static List<BookModel> bookList = new List<BookModel>();
 
         static void Main(string[] args)
@@ -13,60 +15,63 @@ namespace BookAPI
             BookModel newBook = new BookModel();
             string bookName, bookOwner;
             bool bookAvailability = false;
-            do
-            {
-                Console.WriteLine("Please Enter Book name");
-                bookName = Console.ReadLine();
-            } while (ValidateBookName(bookName) == "Book Name cannot be Empty");
-
-            do
-            {
-                Console.WriteLine("Please Enter Book Owner name");
-                bookOwner = Console.ReadLine();
-            } while (ValidateBookOwnerName(bookOwner) == "Book Owner Name cannot be Empty");
+            Console.WriteLine("Please Enter Book name");
+            bookName = Console.ReadLine();
+            ValidateBookName(bookName);
+            Console.WriteLine("Please Enter Book Owner name");
+            bookOwner = Console.ReadLine();            
            
             newBook.BookName = bookName;
             newBook.OwnerName = bookOwner;
             newBook.AvailabilityStatus = bookAvailability;
-            string result = AddNewBook(newBook);
+            bool result = AddNewBook(newBook);
             Console.WriteLine(result);
             Console.ReadKey();
         }
 
-        public static string ValidateBookName(string bookName)
+        public static bool ValidateBookName(string bookName)
         {
-            string result = string.Empty;
             if (string.IsNullOrEmpty(bookName))
             {
-                result = "Book Name cannot be Empty";
+                throw new ValidationException(Constants.InvalidBookName);
             }
-            return result;
+            return true;
         }
 
-        public static string ValidateBookOwnerName(string bookOwnerName)
+        public static bool ValidateBookOwnerName(string bookOwnerName)
         {
-            string result = string.Empty;
             if (string.IsNullOrEmpty(bookOwnerName))
             {
-                result = "Book Owner Name cannot be Empty";
+                throw new ValidationException(Constants.InvalidBookOwnerName);
             }
-            return result;
+            return true;
         }
 
-        public static string ValidateNewBookModel(BookModel bookModel)
+        public static bool ValidateIfBookAlreadyExists(BookModel bookModel)
         {
-            string result = string.Empty;
+            foreach (BookModel book in bookList)
+            {
+                if (book.BookName == bookModel.BookName)
+                {
+                    throw new ValidationException(Constants.InvalidBookAlreadyExists);
+                }
+            }
+            return true;
+        }
+
+        public static bool ValidateNewBookModel(BookModel bookModel)
+        {
             if (bookModel == null)
             {
-                return "Book Details cannot be Empty";
+                throw new ValidationException(Constants.InvalidBookDetails);
             }
             else if(string.IsNullOrEmpty(bookModel.BookName))
             {
-                return "Book Name cannot be Empty";
+                throw new ValidationException(Constants.InvalidBookName);
             }
             else if(string.IsNullOrEmpty(bookModel.OwnerName))
             {
-                return "Book Owner Name cannot be Empty";
+                throw new ValidationException(Constants.InvalidBookOwnerName);
             }
             else
             {
@@ -74,29 +79,30 @@ namespace BookAPI
                 {
                     if(book.BookName==bookModel.BookName)
                     {
-                        return "Book Already Exists";
+                        throw new ValidationException(Constants.InvalidBookAlreadyExists);
                     }
                 }
             }
-            result = "Book validation Successful";
-
-            return result;
+           
+            return true;
         }
 
         public bool IsBookAvailable(BookModel bookModel)
         {
-            throw new NotImplementedException();
+            return bookModel.AvailabilityStatus;
         }
 
-        public static string AddNewBook(BookModel bookModel)
+        public static bool AddNewBook(BookModel bookModel)
         {
-            if(ValidateNewBookModel(bookModel)== "Book validation Successful")
+            if(ValidateNewBookModel(bookModel))
             {
                 bookModel.ID = bookList.Count + 1;
-                bookList.Add(bookModel);
+
+                bookRepository.BookList.Add(bookModel);
+                return true;
             }
 
-            return "Book Addition Successful";
+            return false;
         }
     }
 }
