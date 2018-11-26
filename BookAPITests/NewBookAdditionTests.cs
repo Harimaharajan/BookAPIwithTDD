@@ -1,71 +1,74 @@
 using System;
 using Xunit;
 using BookAPI;
+using AutoFixture;
 
 namespace BookAPITests
 {
     public class NewBookAdditionTests
     {
-        Program p = new Program();
-        public BookModel InitializeBookModel()
+        [Fact]
+        public void ValidateNewBook_BookNameEmptyTest_ReturnsValidationString()
         {
-            BookModel bookModel = new BookModel();
-            bookModel.ID = 1;
-            bookModel.BookName = "C# Programming";
-            bookModel.OwnerName = "Mark";
-            bookModel.AvailabilityStatus = true;
-            return bookModel;
+            string bookName = string.Empty;
+            string expectedResult = "Book Name cannot be Empty";
+
+            Assert.Equal(expectedResult, Program.ValidateBookName(bookName));
         }
 
         [Fact]
-        public void BookNameEmptyTest()
+        public void ValidateNewBook_BookOwnerNameEmptyTest_ReturnsValidationString()
         {
-            BookModel bookModel = InitializeBookModel();
-            bookModel.BookName = string.Empty;
-            Assert.Equal("Book Name cannot Empty", p.ValidateNewBookModel(bookModel));
+            string bookOwnerName = string.Empty;
+            string expectedResult = "Book Owner Name cannot be Empty";
+
+            Assert.Equal(expectedResult, Program.ValidateBookOwnerName(bookOwnerName));
         }
 
         [Fact]
-        public void BookOwnerNameEmptyTest()
+        public void ValidateNewBook_BookAlreadyExistsTest_ReturnsValidationString()
         {
-            BookModel bookModel = InitializeBookModel();
-            bookModel.OwnerName = string.Empty;
-            Assert.Equal("Book Owner Name cannot Empty", p.ValidateNewBookModel(bookModel));
+            var fixture = new Fixture();
+            BookModel bookModel = fixture.Create<BookModel>();
+
+            Assert.Equal("Book Already Exists", Program.ValidateNewBookModel(bookModel));
         }
 
         [Fact]
-        public void BookAlreadyExistsTest()
+        public void ValidateNewBook_BookAdditionSuccessTest_ReturnsSuccessMessage()
         {
-            BookModel bookModel = InitializeBookModel();
-            bookModel.BookName = string.Empty;
-            Assert.Equal("Book Already Exists", p.ValidateNewBookModel(bookModel));
+            var fixture = new Fixture();
+            BookModel bookModel = fixture.Create<BookModel>();
+
+            Assert.Equal("Book Addition Successful", Program.AddNewBook(bookModel));
         }
 
         [Fact]
-        public void BookAdditionSuccessTest()
-        {
-            BookModel bookModel = InitializeBookModel();
-            Assert.Equal("Book Addition Successful", p.AddNewBook(bookModel));
-        }
-
-        [Fact]
-        public void BookModelTest()
+        public void ValidateNewBook_BookModelTest_ReturnsValidationString()
         {
             BookModel bookModel = null;
-            Assert.Equal("Book Details cannot be Empty", p.ValidateNewBookModel(bookModel));
+            string expectedResult = "Book Details cannot be Empty";
+
+            Assert.Equal(expectedResult, Program.ValidateNewBookModel(bookModel));
         }
 
         [Fact]
-        public void BookAvailabilityTest()
+        public void ValidateNewBook_BookAvailabilityTest_ReturnsValidationString()
         {
-            BookModel bookModel = InitializeBookModel();
+            Program p = new Program();
+            var fixture = new Fixture();
+            BookModel bookModel = fixture.Create<BookModel>();
+
             Assert.True(p.IsBookAvailable(bookModel));
         }
 
         [Fact]
-        public void BookInAvailabilityTest()
+        public void ValidateNewBook_BookInAvailabilityTest_ReturnsValidationString()
         {
-            BookModel bookModel = InitializeBookModel();
+            Program p = new Program();
+            var fixture = new Fixture();
+            BookModel bookModel = fixture.Create<BookModel>();
+
             Assert.False(p.IsBookAvailable(bookModel));
         }
     }
