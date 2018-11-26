@@ -5,23 +5,42 @@ using System.Text;
 
 namespace BookAPI
 {
-    public class BookRepository
+    public sealed class BookRepository
     {
+        private BookRepository()
+        {
+
+        }
+
+        private static BookRepository instance = null;
+
+        public static BookRepository Instance
+        {
+            get
+            {
+                if(instance==null)
+                {
+                    instance = new BookRepository();
+                }
+                return instance;
+            }
+        }
+
         private List<BookModel> _booklist = new List<BookModel>();
 
         public List<BookModel> BookList
         {
             get
             {
-                return this._booklist;
+                return _booklist;
             }
             set
             {
-                this._booklist = value;
+                _booklist = value;
             }
         }
 
-        public bool ValidateBookName(string bookName)
+        public bool IsValidBookName(string bookName)
         {
             if (string.IsNullOrEmpty(bookName))
             {
@@ -30,7 +49,7 @@ namespace BookAPI
             return true;
         }
 
-        public bool ValidateBookOwnerName(string bookOwnerName)
+        public bool IsValidBookOwnerName(string bookOwnerName)
         {
             if (string.IsNullOrEmpty(bookOwnerName))
             {
@@ -57,11 +76,11 @@ namespace BookAPI
             {
                 throw new ValidationException(Constants.InvalidBookDetails);
             }
-            else if (string.IsNullOrEmpty(bookModel.BookName))
+            if (string.IsNullOrEmpty(bookModel.BookName))
             {
                 throw new ValidationException(Constants.InvalidBookName);
             }
-            else if (string.IsNullOrEmpty(bookModel.OwnerName))
+            if (string.IsNullOrEmpty(bookModel.OwnerName))
             {
                 throw new ValidationException(Constants.InvalidBookOwnerName);
             }
@@ -84,17 +103,20 @@ namespace BookAPI
             return bookModel.AvailabilityStatus;
         }
 
-        public bool AddNewBook(BookModel bookModel)
+        public int AddNewBook(BookModel bookModel)
         {
             if (ValidateNewBookModel(bookModel))
             {
-                bookModel.ID = BookList.Count + 1;
-
+                if (bookModel.ID == 0)
+                {
+                    bookModel.ID = BookList.Count + 1;
+                }
+                
                 BookList.Add(bookModel);
-                return true;
+                return bookModel.ID;
             }
 
-            return false;
+            return 0;
         }
     }
 }

@@ -6,9 +6,6 @@ namespace BookAPI
 {
     public class Program
     {
-        static BookRepository bookRepository = new BookRepository();
-        public static List<BookModel> bookList = new List<BookModel>();
-
         static void Main(string[] args)
         {
             Console.WriteLine("Book Exchange");
@@ -17,14 +14,14 @@ namespace BookAPI
             bool bookAvailability = false;
             Console.WriteLine("Please Enter Book name");
             bookName = Console.ReadLine();
-            bookRepository.ValidateBookName(bookName);
+            BookRepository.Instance.IsValidBookName(bookName);
             Console.WriteLine("Please Enter Book Owner name");
             bookOwner = Console.ReadLine();
-            bookRepository.ValidateBookOwnerName(bookOwner);
+            BookRepository.Instance.IsValidBookOwnerName(bookOwner);
             newBook.BookName = bookName;
             newBook.OwnerName = bookOwner;
             newBook.AvailabilityStatus = bookAvailability;
-            bool result = bookRepository.AddNewBook(newBook);
+            int result = BookRepository.Instance.AddNewBook(newBook);
             Console.WriteLine(result);
             Console.ReadKey();
         }
