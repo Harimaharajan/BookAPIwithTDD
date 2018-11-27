@@ -10,7 +10,7 @@ namespace BookAPITests
     public class NewBookAdditionTests
     {
         [Fact]
-        public void ValidateNewBook_IsBookNameEmptyTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookNameEmptyTest_ReturnsValidationException()
         {
             var expectedException = new ValidationException(Constants.InvalidBookName);
             var actualException = Assert.Throws<ValidationException>(() => BookRepository.Instance.IsValidBookName(string.Empty));
@@ -19,10 +19,34 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateNewBook_IsBookOwnerNameEmptyTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookOwnerNameEmptyTest_ReturnsValidationException()
         {
             var expectedException = new ValidationException(Constants.InvalidBookOwnerName);
             var actualException = Assert.Throws<ValidationException>(() => BookRepository.Instance.IsValidBookOwnerName(string.Empty));
+
+            Assert.Equal(expectedException.Message, actualException.Message);
+        }
+
+        [Fact]
+        public void ValidateNewBook_IsBookOwnerExistsAlreadyTest_ReturnsValidationMessage()
+        {
+            UserRepository userRepository = new UserRepository();
+            userRepository.InitializeUsers();
+            var fixture = new Fixture();
+            string ownerName = "Mark";
+
+            Assert.True(userRepository.IsBookOwnerExistsAlready(ownerName));
+        }
+
+        [Fact]
+        public void ValidateNewBook_IsBookOwnerExistsAlreadyTest2_ReturnsValidationException()
+        {
+            UserRepository userRepository = new UserRepository();
+            userRepository.InitializeUsers();
+            var fixture = new Fixture();
+            string ownerName = "Henry";
+            var expectedException = new ValidationException(Constants.BookOwnerNotRegistered);
+            var actualException = Assert.Throws<ValidationException>(() => userRepository.IsBookOwnerExistsAlready(ownerName));
 
             Assert.Equal(expectedException.Message, actualException.Message);
         }
