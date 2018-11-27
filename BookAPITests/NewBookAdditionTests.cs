@@ -38,7 +38,7 @@ namespace BookAPITests
         public void ValidateNewBook_BookAdditionSuccessTest_ReturnsSuccessMessage()
         {
             var fixture = new Fixture();
-            BookModel bookModel = fixture.Create<BookModel>();
+            BookModel bookModel = fixture.Build<BookModel>().With(x => x.OwnerName, "Mark").Create();
             int expectedID = bookModel.ID;
             Assert.Equal(expectedID, BookRepository.Instance.AddNewBook(bookModel));
         }

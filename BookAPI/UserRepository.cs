@@ -22,11 +22,6 @@ namespace BookAPI
 
         public UserRepository()
         {
-
-        }
-
-        public void InitializeUsers()
-        {
             Users user1 = new Users(1, "Mark");
             Users user2 = new Users(2, "John");
             Users user3 = new Users(3, "Emma");
