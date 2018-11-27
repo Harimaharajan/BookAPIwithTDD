@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace BookAPI
 {
@@ -116,6 +114,13 @@ namespace BookAPI
 
         public int AddNewBook(BookModel bookModel)
         {
+            if (bookModel != null)
+            {
+                UserRepository userRepository = new UserRepository();
+                IsValidBookName(bookModel.BookName);
+                IsValidBookOwnerName(bookModel.OwnerName);
+                userRepository.IsBookOwnerExistsAlready(bookModel.OwnerName);
+            }
             if (ValidateNewBookModel(bookModel))
             {
                 if (bookModel.ID == 0)
