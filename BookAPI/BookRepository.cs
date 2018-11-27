@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace BookAPI
@@ -86,12 +87,22 @@ namespace BookAPI
             }
             else
             {
-                foreach (BookModel book in BookList)
+                if (BookList.Count > 0)
                 {
-                    if (book.BookName == bookModel.BookName)
+                    var bookAlreadyExists = BookList.Where(n => n.BookName == bookModel.BookName);
+
+                    if (bookAlreadyExists != null)
                     {
                         throw new ValidationException(Constants.InvalidBookAlreadyExists);
                     }
+
+                    //foreach (BookModel book in BookList)
+                    //{
+                    //    if (book.BookName == bookModel.BookName)
+                    //    {
+                    //        throw new ValidationException(Constants.InvalidBookAlreadyExists);
+                    //    }
+                    //}
                 }
             }
 

@@ -10,7 +10,7 @@ namespace BookAPITests
     public class NewBookAdditionTests
     {
         [Fact]
-        public void ValidateNewBook_BookNameEmptyTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookNameEmptyTest_ReturnsValidationString()
         {
             var expectedException = new ValidationException(Constants.InvalidBookName);
             var actualException = Assert.Throws<ValidationException>(() => BookRepository.Instance.IsValidBookName(string.Empty));
@@ -19,7 +19,7 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateNewBook_BookOwnerNameEmptyTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookOwnerNameEmptyTest_ReturnsValidationString()
         {
             var expectedException = new ValidationException(Constants.InvalidBookOwnerName);
             var actualException = Assert.Throws<ValidationException>(() => BookRepository.Instance.IsValidBookOwnerName(string.Empty));
@@ -28,7 +28,7 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateNewBook_BookAlreadyExistsTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookAlreadyExistsTest_ReturnsValidationString()
         {
             var fixture = new Fixture();
             BookModel bookModel = fixture.Create<BookModel>();
@@ -46,7 +46,7 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateNewBook_BookModelTest_ReturnsValidationString()
+        public void ValidateNewBook_IsValidBookModelTest_ReturnsValidationString()
         {
             BookModel bookModel = null;
             var expectedException = new ValidationException(Constants.InvalidBookDetails);
@@ -56,7 +56,7 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateNewBook_BookAvailabilityTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookAvailableTest_ReturnsValidationString()
         {
             var fixture = new Fixture();
             bool expectedResult = true;
@@ -66,7 +66,7 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateNewBook_BookInAvailabilityTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookInAvailableTest_ReturnsValidationString()
         {
             var fixture = new Fixture();
             bool expectedResult = false;
