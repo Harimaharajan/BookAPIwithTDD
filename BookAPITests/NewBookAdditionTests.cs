@@ -1,9 +1,7 @@
-using System;
-using Xunit;
-using BookAPI;
-using AutoFixture;
-using Xunit.Sdk;
 using System.ComponentModel.DataAnnotations;
+using AutoFixture;
+using BookAPI;
+using Xunit;
 
 namespace BookAPITests
 {
@@ -28,31 +26,7 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateNewBook_IsBookOwnerExistsAlreadyTest_ReturnsValidationMessage()
-        {
-            UserRepository userRepository = new UserRepository();
-            userRepository.InitializeUsers();
-            var fixture = new Fixture();
-            string ownerName = "Mark";
-
-            Assert.True(userRepository.IsBookOwnerExistsAlready(ownerName));
-        }
-
-        [Fact]
-        public void ValidateNewBook_IsBookOwnerExistsAlreadyTest2_ReturnsValidationException()
-        {
-            UserRepository userRepository = new UserRepository();
-            userRepository.InitializeUsers();
-            var fixture = new Fixture();
-            string ownerName = "Henry";
-            var expectedException = new ValidationException(Constants.BookOwnerNotRegistered);
-            var actualException = Assert.Throws<ValidationException>(() => userRepository.IsBookOwnerExistsAlready(ownerName));
-
-            Assert.Equal(expectedException.Message, actualException.Message);
-        }
-
-        [Fact]
-        public void ValidateNewBook_IsBookAlreadyExistsTest_ReturnsValidationString()
+        public void ValidateNewBook_IsBookAlreadyExistsTest_ReturnsTrue()
         {
             var fixture = new Fixture();
             BookModel bookModel = fixture.Create<BookModel>();

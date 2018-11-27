@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookAPI
+﻿namespace BookAPI
 {
     public static class Constants
     {
