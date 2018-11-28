@@ -6,26 +6,12 @@ namespace BookAPI
 {
     public sealed class BookRepository : IBookRepository
     {
-        IUserRepository UserRepository;
+        private IUserRepository UserRepository;
 
         public BookRepository(IUserRepository userRepository)
         {
             UserRepository = userRepository;
         }
-
-        //private static BookRepository instance = null;
-
-        //public static BookRepository Instance
-        //{
-        //    get
-        //    {
-        //        if(instance==null)
-        //        {
-        //            instance = new BookRepository();
-        //        }
-        //        return instance;
-        //    }
-        //}
 
         private List<BookModel> _booklist = new List<BookModel>();
 
@@ -39,36 +25,6 @@ namespace BookAPI
             {
                 _booklist = value;
             }
-        }
-
-        private bool IsValidBookName(string bookName)
-        {
-            if (string.IsNullOrEmpty(bookName))
-            {
-                throw new ValidationException(Constants.InvalidBookName);
-            }
-            return true;
-        }
-
-        private bool IsValidBookOwnerName(string bookOwnerName)
-        {
-            if (string.IsNullOrEmpty(bookOwnerName))
-            {
-                throw new ValidationException(Constants.InvalidBookOwnerName);
-            }
-            return true;
-        }
-
-        private bool ValidateIfBookAlreadyExists(BookModel bookModel)
-        {
-            foreach (BookModel book in BookList)
-            {
-                if (book.BookName == bookModel.BookName)
-                {
-                    throw new ValidationException(Constants.InvalidBookAlreadyExists);
-                }
-            }
-            return true;
         }
 
         private bool ValidateNewBookModel(BookModel bookModel)
@@ -85,6 +41,10 @@ namespace BookAPI
             {
                 throw new ValidationException(Constants.InvalidBookOwnerName);
             }
+            if(!UserRepository.IsBookOwnerExistsAlready(bookModel.OwnerName))
+            {
+                throw new ValidationException(Constants.BookOwnerNotRegistered);
+            }
             else
             {
                 if (BookList.Count > 0)
@@ -95,14 +55,6 @@ namespace BookAPI
                     {
                         throw new ValidationException(Constants.InvalidBookAlreadyExists);
                     }
-
-                    //foreach (BookModel book in BookList)
-                    //{
-                    //    if (book.BookName == bookModel.BookName)
-                    //    {
-                    //        throw new ValidationException(Constants.InvalidBookAlreadyExists);
-                    //    }
-                    //}
                 }
             }
 
@@ -116,14 +68,6 @@ namespace BookAPI
 
         public int AddNewBook(BookModel bookModel)
         {
-            if (bookModel != null)
-            {
-                //UserRepository userRepository = new UserRepository();
-                IsValidBookName(bookModel.BookName);
-                IsValidBookOwnerName(bookModel.OwnerName);
-                UserRepository.IsBookOwnerExistsAlready(bookModel.OwnerName);
-                ValidateIfBookAlreadyExists(bookModel);
-            }
             if (ValidateNewBookModel(bookModel))
             {
                 if (bookModel.ID == 0)

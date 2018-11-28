@@ -7,17 +7,17 @@ namespace BookAPITests
 {
     public class UserRepositoryTests
     {
-        IUnityContainer container = new UnityContainer();
-
-        internal void Initialize()
+        internal IUnityContainer Initialize()
         {
+            IUnityContainer container = new UnityContainer();
             container.RegisterType<IUserRepository, UserRepository>();
+            return container;
         }
 
         [Fact]
         public void ValidateBookOwner_IsBookOwnerExistsAlready_ReturnsTrue()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             UserRepository userRepository = container.Resolve<UserRepository>();
             string ownerName = "Mark";
 
@@ -27,7 +27,7 @@ namespace BookAPITests
         [Fact]
         public void ValidateBookOwner_IfBookOwnerDoesNotExistsTest_ReturnsValidationException()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             UserRepository userRepository = container.Resolve<UserRepository>();
             string ownerName = "Henry";
             var expectedException = new ValidationException(Constants.BookOwnerNotRegistered);

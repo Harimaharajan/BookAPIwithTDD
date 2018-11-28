@@ -7,10 +7,8 @@ namespace BookAPI
     {
         static void Main(string[] args)
         {
-            IUserRepository userRepository = new UserRepository();
-
             IUnityContainer container = new UnityContainer();
-            container.RegisterSingleton<BookRepository>();
+            container.RegisterSingleton<IBookRepository, BookRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
 
             BookRepository bookRepository = container.Resolve<BookRepository>();
@@ -29,7 +27,7 @@ namespace BookAPI
             newBook.BookName = bookName;
             newBook.OwnerName = bookOwner;
             newBook.AvailabilityStatus = bookAvailability;
-            //int result = BookRepository.Instance.AddNewBook(newBook);
+            
             int result = bookRepository.AddNewBook(newBook);
             Console.WriteLine(result);
 

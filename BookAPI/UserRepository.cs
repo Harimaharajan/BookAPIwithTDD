@@ -32,9 +32,6 @@ namespace BookAPI
 
         public bool IsBookOwnerExistsAlready(string ownerName)
         {
-            //var userName = from usersList in Users
-            //        where usersList.OwnerName == ownerName
-            //        select usersList.OwnerName.ToString();
             var user = Users.Where(p => p.OwnerName == ownerName).ToList();
 
             if (user.Count > 0)

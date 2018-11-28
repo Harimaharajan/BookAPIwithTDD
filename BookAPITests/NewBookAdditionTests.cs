@@ -8,18 +8,18 @@ namespace BookAPITests
 {
     public class NewBookAdditionTests
     {
-        IUnityContainer container = new UnityContainer();
-
-        public void Initialize()
+        internal IUnityContainer Initialize()
         {
+            IUnityContainer container = new UnityContainer();
             container.RegisterType<IBookRepository, BookRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
+            return container;
         }
 
         [Fact]
         public void AddNewBook_IsBookNameEmptyTest_ReturnsValidationException()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             BookRepository bookRepository = container.Resolve<BookRepository>();
             var expectedException = new ValidationException(Constants.InvalidBookName);
             var fixture = new Fixture();
@@ -32,7 +32,7 @@ namespace BookAPITests
         [Fact]
         public void AddNewBook_IsBookOwnerNameEmptyTest_ReturnsValidationException()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             BookRepository bookRepository = container.Resolve<BookRepository>();
             var expectedException = new ValidationException(Constants.InvalidBookOwnerName);
             var fixture = new Fixture();
@@ -42,34 +42,26 @@ namespace BookAPITests
             Assert.Equal(expectedException.Message, actualException.Message);
         }
 
-        //[Fact]
+        [Fact]
         public void AddNewBook_IsBookAlreadyExistsTest_ReturnsTrue()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             BookRepository bookRepository = container.Resolve<BookRepository>();
             var fixture = new Fixture();
-            BookModel bookModel1 = fixture.Build<BookModel>().With(x => x.BookName, "C#").Create();
+            BookModel bookModel1 = fixture.Build<BookModel>().With(x => x.BookName, "C#").With(x => x.OwnerName, "Mark").Create();
             bookRepository.AddNewBook(bookModel1);
+            
+            BookModel bookModel2 = fixture.Build<BookModel>().With(x => x.BookName, "C#").With(x => x.OwnerName, "Mark").Create();
+            var expectedException = new ValidationException(Constants.InvalidBookAlreadyExists);
+            var actualException = Assert.Throws<ValidationException>(() => bookRepository.AddNewBook(bookModel2));
 
-
-            BookModel bookModel2 = fixture.Build<BookModel>().With(x => x.BookName, "C#").Create();
-            int expectedID = bookModel1.ID;
-
-            Assert.Equal(expectedID, bookRepository.AddNewBook(bookModel2));
-
-
-            //Initialize();
-            //BookRepository bookRepository = container.Resolve<BookRepository>();
-            //var fixture = new Fixture();
-            //BookModel bookModel = fixture.Create<BookModel>();
-
-            //Assert.True(bookRepository.ValidateIfBookAlreadyExists(bookModel));
+            Assert.Equal(expectedException.Message, actualException.Message);
         }
 
         [Fact]
         public void AddNewBook_BookAdditionSuccessTest_ReturnsSuccessMessage()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             BookRepository bookRepository = container.Resolve<BookRepository>();
             var fixture = new Fixture();
             BookModel bookModel = fixture.Build<BookModel>().With(x => x.OwnerName, "Mark").Create();
@@ -81,7 +73,7 @@ namespace BookAPITests
         [Fact]
         public void AddNewBook_IsValidBookModelTest_ReturnsValidationString()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             BookRepository bookRepository = container.Resolve<BookRepository>();
             BookModel bookModel = null;
             var expectedException = new ValidationException(Constants.InvalidBookDetails);
@@ -93,7 +85,7 @@ namespace BookAPITests
         [Fact]
         public void AddNewBook_IsBookAvailableTest_ReturnsValidationString()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             BookRepository bookRepository = container.Resolve<BookRepository>();
             var fixture = new Fixture();
             bool expectedResult = true;
@@ -105,7 +97,7 @@ namespace BookAPITests
         [Fact]
         public void AddNewBook_IsBookInAvailableTest_ReturnsValidationString()
         {
-            Initialize();
+            IUnityContainer container = Initialize();
             BookRepository bookRepository = container.Resolve<BookRepository>();
             var fixture = new Fixture();
             bool expectedResult = false;
