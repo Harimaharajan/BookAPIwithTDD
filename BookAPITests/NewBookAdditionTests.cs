@@ -8,7 +8,7 @@ namespace BookAPITests
 {
     public class NewBookAdditionTests
     {
-        internal IUnityContainer Initialize()
+        private IUnityContainer Initialize()
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterType<IBookRepository, BookRepository>();
