@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity;
 
 namespace BookAPI
 {
@@ -6,6 +7,12 @@ namespace BookAPI
     {
         static void Main(string[] args)
         {
+            IUnityContainer container = new UnityContainer();
+            container.RegisterSingleton<IBookRepository, BookRepository>();
+            container.RegisterType<IUserRepository, UserRepository>();
+
+            BookRepository bookRepository = container.Resolve<BookRepository>();
+
             Console.WriteLine("Book Exchange");
             BookModel newBook = new BookModel();
             string bookName, bookOwner;
@@ -20,7 +27,8 @@ namespace BookAPI
             newBook.BookName = bookName;
             newBook.OwnerName = bookOwner;
             newBook.AvailabilityStatus = bookAvailability;
-            int result = BookRepository.Instance.AddNewBook(newBook);
+            
+            int result = bookRepository.AddNewBook(newBook);
             Console.WriteLine(result);
 
             Console.ReadKey();
