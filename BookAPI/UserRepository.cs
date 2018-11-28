@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BookAPI
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private List<Users> _userList=new List<Users>();
 
@@ -29,7 +29,7 @@ namespace BookAPI
             Users.Add(user2);
             Users.Add(user3);
         }
-        
+
         public bool IsBookOwnerExistsAlready(string ownerName)
         {
             //var userName = from usersList in Users

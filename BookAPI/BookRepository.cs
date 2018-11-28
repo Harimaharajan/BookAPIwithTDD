@@ -4,26 +4,28 @@ using System.Linq;
 
 namespace BookAPI
 {
-    public sealed class BookRepository
+    public sealed class BookRepository : IBookRepository
     {
-        private BookRepository()
-        {
+        IUserRepository UserRepository;
 
+        public BookRepository(IUserRepository userRepository)
+        {
+            UserRepository = userRepository;
         }
 
-        private static BookRepository instance = null;
+        //private static BookRepository instance = null;
 
-        public static BookRepository Instance
-        {
-            get
-            {
-                if(instance==null)
-                {
-                    instance = new BookRepository();
-                }
-                return instance;
-            }
-        }
+        //public static BookRepository Instance
+        //{
+        //    get
+        //    {
+        //        if(instance==null)
+        //        {
+        //            instance = new BookRepository();
+        //        }
+        //        return instance;
+        //    }
+        //}
 
         private List<BookModel> _booklist = new List<BookModel>();
 
@@ -39,7 +41,7 @@ namespace BookAPI
             }
         }
 
-        public bool IsValidBookName(string bookName)
+        private bool IsValidBookName(string bookName)
         {
             if (string.IsNullOrEmpty(bookName))
             {
@@ -48,7 +50,7 @@ namespace BookAPI
             return true;
         }
 
-        public bool IsValidBookOwnerName(string bookOwnerName)
+        private bool IsValidBookOwnerName(string bookOwnerName)
         {
             if (string.IsNullOrEmpty(bookOwnerName))
             {
@@ -57,7 +59,7 @@ namespace BookAPI
             return true;
         }
 
-        public bool ValidateIfBookAlreadyExists(BookModel bookModel)
+        private bool ValidateIfBookAlreadyExists(BookModel bookModel)
         {
             foreach (BookModel book in BookList)
             {
@@ -69,7 +71,7 @@ namespace BookAPI
             return true;
         }
 
-        public bool ValidateNewBookModel(BookModel bookModel)
+        private bool ValidateNewBookModel(BookModel bookModel)
         {
             if (bookModel == null)
             {
@@ -116,10 +118,11 @@ namespace BookAPI
         {
             if (bookModel != null)
             {
-                UserRepository userRepository = new UserRepository();
+                //UserRepository userRepository = new UserRepository();
                 IsValidBookName(bookModel.BookName);
                 IsValidBookOwnerName(bookModel.OwnerName);
-                userRepository.IsBookOwnerExistsAlready(bookModel.OwnerName);
+                UserRepository.IsBookOwnerExistsAlready(bookModel.OwnerName);
+                ValidateIfBookAlreadyExists(bookModel);
             }
             if (ValidateNewBookModel(bookModel))
             {
