@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using AutoFixture;
 using BookAPI;
+using Moq;
 using Unity;
 using Xunit;
 
@@ -8,7 +9,7 @@ namespace BookAPITests
 {
     public class NewBookAdditionTests
     {
-        private IUnityContainer Initialize()
+        private static IUnityContainer Initialize()
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterType<IBookRepository, BookRepository>();
@@ -19,11 +20,12 @@ namespace BookAPITests
         [Fact]
         public void AddNewBook_IsBookNameEmptyTest_ReturnsValidationException()
         {
-            IUnityContainer container = Initialize();
-            BookRepository bookRepository = container.Resolve<BookRepository>();
+            var mock = Mock.Of<IBookRepository>();
+            var container = Initialize();
+            var bookRepository = container.Resolve<BookRepository>();
             var expectedException = new ValidationException(Constants.InvalidBookName);
             var fixture = new Fixture();
-            BookModel bookModel = fixture.Build<BookModel>().With(x => x.BookName, string.Empty).Create();
+            var bookModel = fixture.Build<BookModel>().With(x => x.BookName, string.Empty).Create();
             var actualException = Assert.Throws<ValidationException>(() => bookRepository.AddNewBook(bookModel));
 
             Assert.Equal(expectedException.Message, actualException.Message);
@@ -65,9 +67,9 @@ namespace BookAPITests
             BookRepository bookRepository = container.Resolve<BookRepository>();
             var fixture = new Fixture();
             BookModel bookModel = fixture.Build<BookModel>().With(x => x.OwnerName, "Mark").Create();
-            int expectedID = bookModel.ID;
+            int expectedId = bookModel.ID;
 
-            Assert.Equal(expectedID, bookRepository.AddNewBook(bookModel));
+            Assert.Equal(expectedId, bookRepository.AddNewBook(bookModel));
         }
 
         [Fact]

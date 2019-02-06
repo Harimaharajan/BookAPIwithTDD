@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BookAPI;
-using Xunit;
 using Unity;
+using Xunit;
 
 namespace BookAPITests
 {
     public class UserRepositoryTests
     {
-        private IUnityContainer Initialize()
+        private static IUnityContainer Initialize()
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterType<IUserRepository, UserRepository>();
@@ -15,25 +15,26 @@ namespace BookAPITests
         }
 
         [Fact]
-        public void ValidateBookOwner_IsBookOwnerExistsAlready_ReturnsTrue()
+        public void ValidateBookOwner_IfBookOwnerDoesNotExistsTest_ReturnsValidationException()
         {
-            IUnityContainer container = Initialize();
-            UserRepository userRepository = container.Resolve<UserRepository>();
-            string ownerName = "Mark";
+            var container = Initialize();
+            var userRepository = container.Resolve<UserRepository>();
+            var ownerName = "Henry";
+            var expectedException = new ValidationException(Constants.BookOwnerNotRegistered);
+            var actualException =
+                Assert.Throws<ValidationException>(() => userRepository.IsBookOwnerExistsAlready(ownerName));
 
-            Assert.True(userRepository.IsBookOwnerExistsAlready(ownerName));
+            Assert.Equal(expectedException.Message, actualException.Message);
         }
 
         [Fact]
-        public void ValidateBookOwner_IfBookOwnerDoesNotExistsTest_ReturnsValidationException()
+        public void ValidateBookOwner_IsBookOwnerExistsAlready_ReturnsTrue()
         {
-            IUnityContainer container = Initialize();
-            UserRepository userRepository = container.Resolve<UserRepository>();
-            string ownerName = "Henry";
-            var expectedException = new ValidationException(Constants.BookOwnerNotRegistered);
-            var actualException = Assert.Throws<ValidationException>(() => userRepository.IsBookOwnerExistsAlready(ownerName));
+            var container = Initialize();
+            var userRepository = container.Resolve<UserRepository>();
+            var ownerName = "Mark";
 
-            Assert.Equal(expectedException.Message, actualException.Message);
+            Assert.True(userRepository.IsBookOwnerExistsAlready(ownerName));
         }
     }
 }

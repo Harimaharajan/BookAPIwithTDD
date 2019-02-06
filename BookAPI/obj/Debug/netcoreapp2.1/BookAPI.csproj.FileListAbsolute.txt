@@ -9,3 +9,14 @@ D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.AssemblyInfoInputs.cache
 D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.AssemblyInfo.cs
 D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.dll
 D:\BookAPI\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.pdb
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.deps.json
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.runtimeconfig.json
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.runtimeconfig.dev.json
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.dll
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\bin\Debug\netcoreapp2.1\BookAPI.pdb
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.csprojAssemblyReference.cache
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.csproj.CoreCompileInputs.cache
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.AssemblyInfoInputs.cache
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.AssemblyInfo.cs
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.dll
+C:\Users\harimaharajanm\RiderProjects\BookAPIwithTDD\BookAPI\obj\Debug\netcoreapp2.1\BookAPI.pdb
